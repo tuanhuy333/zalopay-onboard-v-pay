@@ -5,7 +5,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"V_Pay_Onboard_Program/models"
+	"pay-service/models"
 )
 
 type Storage struct {
@@ -15,23 +15,6 @@ type Storage struct {
 func New(db *gorm.DB) *Storage {
 	return &Storage{db: db}
 }
-func (s *Storage) CreateOrder(p *models.Order) error {
-
-	err := s.db.Create(&p)
-	if err.Error != nil {
-		return err.Error
-	}
-	return nil
-}
-func (s *Storage) GetAllOrder(p *[]models.Order) error {
-
-	err := s.db.Find(&p)
-	if err.Error != nil {
-		return err.Error
-	}
-	return nil
-}
-
 func (s *Storage) checkIfOrderExists(orderId string) bool {
 	var o models.Order
 	s.db.First(&o, orderId)

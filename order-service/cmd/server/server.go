@@ -3,6 +3,8 @@ package server
 import (
 	"context"
 	"errors"
+	"fmt"
+	"net"
 	"net/http"
 	"time"
 
@@ -10,26 +12,31 @@ import (
 	_ "github.com/go-sql-driver/mysql" // import underlying database driver
 	"github.com/jmoiron/sqlx"
 	"google.golang.org/appengine/log"
+	"google.golang.org/grpc"
 	"gorm.io/gorm"
 
 	_ "gorm.io/driver/mysql"
 
-	"V_Pay_Onboard_Program/pkg/handlers"
-	"V_Pay_Onboard_Program/pkg/kafka"
+	"order-service/pkg/handlers"
+	"order-service/pkg/kafka"
+	"order-service/pkg/service"
 )
 
 type Server struct {
-	config   Config
-	http     *http.Server
-	db       *sqlx.DB
-	gormDB   *gorm.DB
-	handle   handlers.Handler
-	consumer kafka.Consumer
-	producer kafka.Producer
-	gin      *gin.Engine
+	config      Config
+	http        *http.Server
+	grpc        *grpc.Server
+	grpcService *service.GRPCService
+	db          *sqlx.DB
+	gormDB      *gorm.DB
+	handle      handlers.Handler
+	consumer    kafka.Consumer
+	producer    kafka.Producer
+	gin         *gin.Engine
 }
 
 type Config struct {
+	Env      string
 	Database struct {
 		Addr string
 		Name string
@@ -60,27 +67,41 @@ func (s *Server) Start() {
 }
 
 func (s *Server) startConsumers() {
+	fmt.Println("Start Consumer")
 	// start consumer
 	go func() {
 		err := s.consumer.Start()
 		if err != nil && !errors.Is(err, kafka.ErrConsumerGroupClosed) {
-			log.Errorf(nil, "stop pe consumer:%v", err)
+			log.Errorf(nil, "stop consumer:%v", err)
 		}
 	}()
 }
 func (s *Server) startHTTP() {
+	fmt.Println("Start HTTP")
 	go func() {
 		s.gin.Run(":8099")
 		return
 	}()
 }
+func (s *Server) startGRPC() {
+	fmt.Println("Start GRPC")
+
+	addr := "localhost:9090"
+	if s.config.Env != "local" {
+		addr = ":9090"
+	}
+	l, err := net.Listen("tcp", addr)
+	if err != nil {
+		log.Errorf(nil, "listen grpc: %v", err)
+	}
+	if err = s.grpc.Serve(l); err != nil {
+		log.Errorf(nil, "serve grpc: %v", err)
+	}
+}
 func (s *Server) start() {
-	// start consumer
 	s.startConsumers()
-
-	// start http
 	s.startHTTP()
-
+	s.startGRPC()
 }
 
 func (s *Server) Shutdown() {

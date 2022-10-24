@@ -1,5 +1,5 @@
 import React from 'react'
-import Posts from '../components/Order'
+import Orders from '../components/Order'
 import { useParams } from 'react-router';
 function OrderPage() {
     const { orderId } = useParams();
@@ -7,7 +7,7 @@ function OrderPage() {
 
     return (
    
-        <Posts />
+        <Orders />
    
   )
 }

@@ -5,13 +5,16 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"google.golang.org/grpc"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"V_Pay_Onboard_Program/models"
-	"V_Pay_Onboard_Program/pkg/kafka"
-	"V_Pay_Onboard_Program/pkg/service"
+	"order-service/models"
+
+	"order-service/pkg/disbursement/pb"
+	"order-service/pkg/kafka"
+	"order-service/pkg/service"
 )
 
 func (s *Server) init() {
@@ -28,6 +31,7 @@ func (s *Server) init() {
 	checkErr("kafka.consumer", s.initKafkaConsumer())
 
 	s.initRouter()
+	s.initGRPC()
 
 }
 
@@ -59,6 +63,17 @@ func (s *Server) initService() {
 	// init service publisher
 	publisherService := service.NewPublisher(s.producer, s.config.Kafka.Orders.Topic)
 	s.handle.PublisherService = publisherService
+
+	// init service implement GRPC
+	grpcSvc := service.NewGRPCService(handleDB)
+	s.grpcService = grpcSvc
+
+}
+
+func (s *Server) initGRPC() error {
+	s.grpc = grpc.NewServer()
+	pb.RegisterDisbursementServer(s.grpc, s.grpcService)
+	return nil
 }
 
 func (s *Server) initRouter() error {

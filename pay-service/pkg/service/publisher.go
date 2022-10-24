@@ -3,8 +3,8 @@ package service
 import (
 	"encoding/json"
 
-	"V_Pay_Onboard_Program/models"
-	"V_Pay_Onboard_Program/pkg/kafka"
+	"pay-service/models"
+	"pay-service/pkg/kafka"
 )
 
 type PublisherService interface {

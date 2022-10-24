@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"V_Pay_Onboard_Program/models"
-	"V_Pay_Onboard_Program/pkg/service"
+	"order-service/models"
+	"order-service/pkg/service"
 )
 
 type Handler struct {
@@ -40,6 +40,8 @@ func (h *Handler) CreateOrders(context *gin.Context) {
 }
 
 func (h *Handler) GetOrders(context *gin.Context) {
+	context.Header("Access-Control-Allow-Origin", "http://localhost:3001")
+
 	var orders []models.Order
 	o, err := h.Service.GetAllOrder(&orders)
 	if err != nil {

@@ -7,14 +7,17 @@ import (
 
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
+	"google.golang.org/grpc"
+
+	"pay-service/pkg/disbursement/pb"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"V_Pay_Onboard_Program/pkg/service"
+	"pay-service/pkg/service"
 
-	"V_Pay_Onboard_Program/models"
-	"V_Pay_Onboard_Program/pkg/kafka"
+	"pay-service/models"
+	"pay-service/pkg/kafka"
 )
 
 func (s *Server) init() {
@@ -26,6 +29,8 @@ func (s *Server) init() {
 
 	checkErr("database", s.initDB())
 	checkErr("kafka.producer", s.initKafkaProducer())
+
+	s.initGRPC()
 
 	s.initService()
 
@@ -61,6 +66,11 @@ func (s *Server) initService() {
 	// init service publisher
 	publisherService := service.NewPublisher(s.producer)
 	s.handle.PublisherService = publisherService
+
+	// init GRPC client
+	clientService := service.NewClient(s.client)
+	s.handle.Client = clientService
+
 }
 
 func (s *Server) initRouter() error {
@@ -84,6 +94,17 @@ func (s *Server) initRouter() error {
 	}
 	s.gin = router
 
+	return nil
+}
+
+func (s *Server) initGRPC() error {
+	cc, err := grpc.Dial("localhost:9090", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("error when dial %v", err)
+	}
+	//defer cc.Close()
+	client := pb.NewDisbursementClient(cc)
+	s.client = client
 	return nil
 }
 

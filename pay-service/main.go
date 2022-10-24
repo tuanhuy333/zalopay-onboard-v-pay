@@ -6,8 +6,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"V_Pay_Onboard_Program/cmd/server"
-	"V_Pay_Onboard_Program/pkg/config"
+	"pay-service/cmd/server"
+	"pay-service/pkg/config"
 )
 
 func main() {

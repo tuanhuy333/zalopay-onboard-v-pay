@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
         <Routes>
              <Route path="/order/:orderId" element={<OrderPage />} exact/>
-             <Route path="/*" element={<ErrorPage />} exact/>
+             <Route path="*" element={<ErrorPage />} exact/>
         </Routes>
     </BrowserRouter>
 

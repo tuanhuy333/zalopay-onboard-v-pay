@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from 'react-router';
 import '../assets/card-success.css';
 
-let baseUrl = "http://localhost:8099/api/orders/";
+let baseUrl = "http://localhost:8098/api/orders/";
 let postUrl = "http://localhost:8098/api/confirm/";
 function Orders() {
 
@@ -20,6 +20,7 @@ function Orders() {
         axios
             .get(urlAPI)
             .then((response) => {
+
                 setOrder(response.data.data)
             })
             .catch(error => {
@@ -56,7 +57,7 @@ function Orders() {
                                 <p>ORDER NO:</p>
                             </div>
                             <div class="col text-right">
-                                #{order.orderNo}
+                                <p>#{order.order_no}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -64,7 +65,7 @@ function Orders() {
                                 <p>MERCHANT:</p>
                             </div>
                             <div class="col text-right">
-                                {order.merchantID}
+                                <p>{order.merchant_id}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -72,7 +73,7 @@ function Orders() {
                                 <p>APP ID:</p>
                             </div>
                             <div class="col text-right">
-                                {order.appID}
+                                <p>{order.app_id}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -80,7 +81,7 @@ function Orders() {
                                 <p>AMOUNT:</p>
                             </div>
                             <div class="col text-right">
-                                {order.amount} VND
+                                <p>{order.amount} VND</p>
                             </div>
                         </div>
                         <div class="row">
@@ -88,7 +89,7 @@ function Orders() {
                                 <p>PRODUCT CODE:</p>
                             </div>
                             <div class="col text-right">
-                                {order.productCode}
+                                <p>{order.product_code}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -96,17 +97,10 @@ function Orders() {
                                 <p>DESCRIPTION:</p>
                             </div>
                             <div class="col text-right">
-                                {order.description}
+                                <p>{order.description}</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col text-left">
-                                <p>CREATE TIME:</p>
-                            </div>
-                            <div class="col text-right">
-                                {order.CreateTime}
-                            </div>
-                        </div>
+                    
 
                         <div class="row">
                             <a onClick={confirm} className="btn btn-primary btn-lg btn-login btn-block">Confirm</a>

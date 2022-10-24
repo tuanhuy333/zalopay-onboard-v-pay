@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"log"
 
-	"V_Pay_Onboard_Program/models"
-	"V_Pay_Onboard_Program/pkg/kafka"
+	"order-service/models"
+	"order-service/pkg/kafka"
 )
 
 type HandleMessageService interface {

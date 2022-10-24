@@ -10,10 +10,12 @@ import (
 	"github.com/jmoiron/sqlx"
 	"gorm.io/gorm"
 
+	"pay-service/pkg/disbursement/pb"
+
 	_ "gorm.io/driver/mysql"
 
-	"V_Pay_Onboard_Program/pkg/handlers"
-	"V_Pay_Onboard_Program/pkg/kafka"
+	"pay-service/pkg/handlers"
+	"pay-service/pkg/kafka"
 )
 
 type Server struct {
@@ -24,6 +26,7 @@ type Server struct {
 	handle   handlers.Handler
 	producer kafka.Producer
 	gin      *gin.Engine
+	client   pb.DisbursementClient
 }
 
 type Config struct {

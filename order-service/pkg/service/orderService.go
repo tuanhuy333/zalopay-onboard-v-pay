@@ -5,7 +5,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"V_Pay_Onboard_Program/models"
+	"order-service/models"
 )
 
 type Storage struct {
