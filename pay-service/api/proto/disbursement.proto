@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package v_pay.disbursement.v1;
+
+import "google/protobuf/timestamp.proto";
+
+service Disbursement {
+
+  rpc GetOrder (GetOrderRequest) returns (Order);
+}
+
+message GetOrderRequest {
+  // @gotags: validate:"min=1"
+  int64 order_no = 1;
+}
+
+message Order {
+  int32 order_no = 1;
+  string merchant_id = 2;
+  int32 app_id = 3;
+  int32 status = 4;
+  float amount = 5;
+  string product_code = 6;
+  string description = 7;
+  google.protobuf.Timestamp create_time = 8;
+
+}
+
+enum OrderStatus {
+  ORDER_STATUS_UNSPECIFIED = 0;
+
+  CREATED = 1;
+  PROCESSING = 2;
+  PENDING = 3;
+  SUCCESS = 4;
+  FAILED = 5;
+}
+
