@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"order-service/pkg/disbursement/converters"
-	"order-service/pkg/disbursement/pb"
+	"order-service/pkg/order/converters"
+	"order-service/pkg/order/pb"
 )
 
 type GRPCService struct {

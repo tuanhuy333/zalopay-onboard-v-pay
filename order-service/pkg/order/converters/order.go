@@ -4,7 +4,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"order-service/models"
-	"order-service/pkg/disbursement/pb"
+	"order-service/pkg/order/pb"
 )
 
 // OrderCore2Pb convert Order core to protobuf message

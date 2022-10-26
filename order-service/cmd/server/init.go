@@ -12,8 +12,8 @@ import (
 
 	"order-service/models"
 
-	"order-service/pkg/disbursement/pb"
 	"order-service/pkg/kafka"
+	"order-service/pkg/order/pb"
 	"order-service/pkg/service"
 )
 

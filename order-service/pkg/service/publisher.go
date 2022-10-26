@@ -23,14 +23,14 @@ func NewPublisher(p kafka.Producer, topic string) PublisherService {
 	}
 }
 func (p *publisherImpl) Publish(order models.Order) error {
-	o, err := json.Marshal(order)
-	if err != nil {
-		return err
-	}
-	p.producer.Produce(nil, kafka.Message{
+	o, _ := json.Marshal(order)
+	err := p.producer.Produce(nil, kafka.Message{
 		Topic: p.topic,
 		Key:   []byte(kafka.EventNameOrderCompleted),
 		Value: o,
 	})
+	if err != nil {
+		return err
+	}
 	return nil
 }

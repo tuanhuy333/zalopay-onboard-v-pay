@@ -8,20 +8,7 @@ const ordersAPI = "http://localhost:8099/api/orders";
 function AdminPage() {
 
 
-    const [data, setData] = useState([])
-
-    // function getColumns() {
-    //     if (columns) {
-    //     return columns.map(key => {
-    //       return {
-    //         id: key.toString(),
-    //         Header: key.toString(),
-    //         accessor: key.toString()
-    //       };
-    //     });
-    //   }}
-
-
+    const [data, setData] = useState([]);
 
     const getData = () => {
         axios.get(ordersAPI)
