@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/golang/mock/gomock"
@@ -8,19 +9,7 @@ import (
 
 	"order-service/mock"
 	"order-service/models"
-	"order-service/pkg/kafka"
 )
-
-type producerServiceMock struct {
-}
-
-//
-//func (p *producerServiceMock) Produce(context context.Context, msg kafka.Message) error {
-//	return nil
-//}
-//func (p *producerServiceMock) Close() error {
-//	return nil
-//}
 
 func TestNewPublisher(t *testing.T) {
 
@@ -31,58 +20,24 @@ func TestNewPublisher(t *testing.T) {
 }
 
 func Test_publisherImpl_Publish(t *testing.T) {
+	t.Run("publisher success", func(t *testing.T) {
+		p := mock.NewMockProducer(gomock.NewController(t))
+		s := publisherImpl{producer: p}
 
-	type fields struct {
-		producer kafka.Producer
-		topic    string
-	}
-	type args struct {
-		order models.Order
-	}
-	tests := []struct {
-		name    string
-		fields  func(t *testing.T) fields
-		args    args
-		wantErr bool
-	}{
+		m := models.Order{}
+		p.EXPECT().Produce(gomock.Any(), gomock.Any()).Return(nil)
 
-		{
+		s.Publish(m)
+	})
+	t.Run("publisher failed", func(t *testing.T) {
+		p := mock.NewMockProducer(gomock.NewController(t))
+		s := publisherImpl{producer: p}
 
-			name: "publish success",
-			fields: func(t *testing.T) fields {
-				p := mock.NewMockProducer(gomock.NewController(t))
-				p.EXPECT().Produce(gomock.Any(), gomock.Any()).Return(nil)
+		m := models.Order{}
+		p.EXPECT().Produce(gomock.Any(), gomock.Any()).Return(errors.New("producer fail"))
 
-				return fields{producer: p}
-				//producer:
-				//	func() kafka.Producer {
-				//		return nil
-				//	}
+		err := s.Publish(m)
+		require.Error(t, err, "producer fail")
+	})
 
-			},
-
-			args:    args{order: models.Order{}},
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			p := &publisherImpl{
-				producer: tt.fields(t).producer,
-				topic:    tt.fields(t).topic,
-			}
-			if err := p.Publish(tt.args.order); (err != nil) != tt.wantErr {
-				t.Errorf("Publish() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
-}
-func Test_publisherImpl_Publish1(t *testing.T) {
-	p := mock.NewMockProducer(gomock.NewController(t))
-	s := publisherImpl{producer: p}
-
-	m := models.Order{}
-	p.EXPECT().Produce(gomock.Any(), gomock.Any()).Return(nil)
-
-	s.Publish(m)
 }
