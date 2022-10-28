@@ -1,19 +1,23 @@
 import React from "react";
 import axios from "axios";
-import { useParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 import '../assets/card-success.css';
 
-let baseUrl = "http://localhost:8098/api/orders/";
+let baseUrl = "http://localhost:8098/api/orders?orderNo=";
 let postUrl = "http://localhost:8098/api/confirm/";
 function Orders() {
 
-    const { orderId } = useParams();
+   
+    const [searchParams, setSearchParams] = useSearchParams();
+    var orderNo = searchParams.get("orderNo")
+   
+    console.log("orderNo" + orderNo)
 
     const [order, setOrder] = React.useState(null);
     const [paySuccess, setPaySuccess] = React.useState(false);
     const [error, setError] = React.useState(null);
 
-    let urlAPI = baseUrl + orderId;
+    let urlAPI = baseUrl + orderNo;
 
 
     React.useEffect(() => {
@@ -52,6 +56,9 @@ function Orders() {
 
                     <>
                         <h1>Your Order</h1>
+                        <div class="row justify-content-md-center">
+                            <img src="https://gray-kwch-prod.cdn.arcpublishing.com/resizer/34XlWhykDU7BCwTdMhjoyUhKcIY=/980x0/smart/filters:quality(70)/cloudfront-us-east-1.images.arcpublishing.com/gray/5A4FDMHJQVDCDDCUUUMVFQEZT4.png" width={300} height={300}/>
+                        </div>
                         <div class="row">
                             <div class="col text-left">
                                 <p>ORDER NO:</p>
@@ -102,8 +109,8 @@ function Orders() {
                         </div>
                     
 
-                        <div class="row">
-                            <a onClick={confirm} className="btn btn-primary btn-lg btn-login btn-block">Confirm</a>
+                        <div class="row" onClick={confirm}> 
+                            <p className="btn btn-primary btn-lg btn-login btn-block">Confirm</p>
 
                         </div>
                     </>

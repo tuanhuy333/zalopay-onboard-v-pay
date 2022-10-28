@@ -10,7 +10,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"gorm.io/gorm"
 
-	"pay-service/pkg/disbursement/pb"
+	"pay-service/pkg/order/pb"
 
 	_ "gorm.io/driver/mysql"
 

@@ -82,7 +82,7 @@ func (s *Server) initRouter() error {
 	{
 		api.POST("/orders", s.handle.CreateOrders)
 		api.GET("/orders", s.handle.GetOrders)
-		api.GET("/orders/:id", s.handle.GetOrderById)
+		//api.GET("/orders/:id", s.handle.GetOrderById)
 	}
 	s.gin = router
 

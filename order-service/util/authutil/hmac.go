@@ -18,8 +18,6 @@ func BuildMAC(key string, params ...interface{}) string {
 
 	h := hmac.New(sha256.New, []byte(key))
 	h.Write([]byte(strings.Join(str, "|")))
-	s := strings.Join(str, "|")
-	fmt.Println(s)
 	return hex.EncodeToString(h.Sum(nil))
 }
 

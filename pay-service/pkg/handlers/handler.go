@@ -19,8 +19,13 @@ type Handler struct {
 
 func (h *Handler) GetOrderById(context *gin.Context) {
 
-	id := context.Param("id")
-	orderId, _ := strconv.Atoi(id)
+	id := context.Query("orderNo")
+	orderId, errParse := strconv.Atoi(id)
+	if errParse != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "orderNo is invalid"})
+		context.Abort()
+		return
+	}
 	o, err := h.Client.CallGetOrder(context, orderId)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

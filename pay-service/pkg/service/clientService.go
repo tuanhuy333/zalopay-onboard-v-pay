@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"pay-service/pkg/disbursement/pb"
+	"pay-service/pkg/order/pb"
 )
 
 type ClientInterface interface {

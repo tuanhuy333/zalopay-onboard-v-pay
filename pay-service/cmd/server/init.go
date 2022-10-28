@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 
-	"pay-service/pkg/disbursement/pb"
+	"pay-service/pkg/order/pb"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -89,7 +89,7 @@ func (s *Server) initRouter() error {
 
 	api := router.Group("/api")
 	{
-		api.GET("/orders/:id", s.handle.GetOrderById)
+		api.GET("/orders", s.handle.GetOrderById)
 		api.POST("/confirm", s.handle.Confirm)
 	}
 	s.gin = router
