@@ -14,11 +14,11 @@ type HandleMessageService interface {
 }
 
 type messageImpl struct {
-	service          *Storage
+	service          OrderService
 	PublisherService PublisherService
 }
 
-func NewMessageService(s *Storage, p PublisherService) HandleMessageService {
+func NewMessageService(s OrderService, p PublisherService) HandleMessageService {
 	return &messageImpl{service: s, PublisherService: p}
 }
 

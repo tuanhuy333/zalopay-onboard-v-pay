@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.7
-// source: order.proto
+// source: disbursement.proto
 
 package pb
 
@@ -35,7 +35,7 @@ func NewDisbursementClient(cc grpc.ClientConnInterface) DisbursementClient {
 
 func (c *disbursementClient) GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*Order, error) {
 	out := new(Order)
-	err := c.cc.Invoke(ctx, "/v_pay.order.v1.Disbursement/GetOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v_pay.disbursement.v1.Disbursement/GetOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func _Disbursement_GetOrder_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v_pay.order.v1.Disbursement/GetOrder",
+		FullMethod: "/v_pay.disbursement.v1.Disbursement/GetOrder",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DisbursementServer).GetOrder(ctx, req.(*GetOrderRequest))
@@ -92,7 +92,7 @@ func _Disbursement_GetOrder_Handler(srv interface{}, ctx context.Context, dec fu
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Disbursement_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "v_pay.order.v1.Disbursement",
+	ServiceName: "v_pay.disbursement.v1.Disbursement",
 	HandlerType: (*DisbursementServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -101,5 +101,5 @@ var Disbursement_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "order.proto",
+	Metadata: "disbursement.proto",
 }

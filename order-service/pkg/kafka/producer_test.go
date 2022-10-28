@@ -75,5 +75,11 @@ func TestNewProducer(t *testing.T) {
 		require.Error(t, err, "should return err not nil")
 		require.Nil(t, c)
 	})
+	t.Run("a", func(t *testing.T) {
+		mocks.NewSyncProducer(t, nil).ExpectSendMessageAndSucceed()
+		c, err := NewProducer([]string{"abc"})
+		require.Error(t, err, "should return err not nil")
+		require.Nil(t, c)
+	})
 
 }

@@ -9,7 +9,7 @@ type Order struct {
 	MerchantID  string    `json:"merchantID"`
 	AppID       int32     `json:"appID"`
 	Status      int32     `json:"status"`
-	Amount      float64   `json:"amount"`
+	Amount      float64   `json:"amount" binding:"required"`
 	ProductCode string    `json:"productCode"`
 	Description string    `json:"description"`
 	CreateTime  time.Time `gorm:"autoCreateTime"`

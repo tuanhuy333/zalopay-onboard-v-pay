@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.28.1
 // 	protoc        v3.21.7
-// source: order.proto
+// source: disbursement.proto
 
 package pb
 
@@ -289,15 +289,15 @@ func file_disbursement_proto_rawDescGZIP() []byte {
 var file_disbursement_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_disbursement_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_disbursement_proto_goTypes = []interface{}{
-	(OrderStatus)(0),              // 0: v_pay.order.v1.OrderStatus
-	(*GetOrderRequest)(nil),       // 1: v_pay.order.v1.GetOrderRequest
-	(*Order)(nil),                 // 2: v_pay.order.v1.Order
+	(OrderStatus)(0),              // 0: v_pay.disbursement.v1.OrderStatus
+	(*GetOrderRequest)(nil),       // 1: v_pay.disbursement.v1.GetOrderRequest
+	(*Order)(nil),                 // 2: v_pay.disbursement.v1.Order
 	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
 var file_disbursement_proto_depIdxs = []int32{
-	3, // 0: v_pay.order.v1.Order.create_time:type_name -> google.protobuf.Timestamp
-	1, // 1: v_pay.order.v1.Disbursement.GetOrder:input_type -> v_pay.order.v1.GetOrderRequest
-	2, // 2: v_pay.order.v1.Disbursement.GetOrder:output_type -> v_pay.order.v1.Order
+	3, // 0: v_pay.disbursement.v1.Order.create_time:type_name -> google.protobuf.Timestamp
+	1, // 1: v_pay.disbursement.v1.Disbursement.GetOrder:input_type -> v_pay.disbursement.v1.GetOrderRequest
+	2, // 2: v_pay.disbursement.v1.Disbursement.GetOrder:output_type -> v_pay.disbursement.v1.Order
 	2, // [2:3] is the sub-list for method output_type
 	1, // [1:2] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

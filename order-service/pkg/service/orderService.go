@@ -8,11 +8,18 @@ import (
 	"order-service/models"
 )
 
+type OrderService interface {
+	CreateOrder(p *models.Order) error
+	GetAllOrder(p *[]models.Order) (*[]models.Order, error)
+	GetOrderById(orderId int) (*models.Order, error)
+	UpdateOrderById(orderId int, o *models.Order) (*models.Order, error)
+}
+
 type Storage struct {
 	db *gorm.DB
 }
 
-func New(db *gorm.DB) *Storage {
+func New(db *gorm.DB) OrderService {
 	return &Storage{db: db}
 }
 
