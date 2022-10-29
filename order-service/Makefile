@@ -40,8 +40,6 @@ up: ## Run local environment
 down: ## Shutdown local environment
 	@$(DOCKER_COMPOSE) down
 
-
-
 ##@ Migration
 
 fileName := "default"
