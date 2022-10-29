@@ -81,6 +81,29 @@ func TestHandler_CreateOrder(t *testing.T) {
 			t.Error("error")
 		}
 	})
+	t.Run("CreateOrder fail authentication", func(t *testing.T) {
+		// mock service
+		o := mock.NewMockOrderService(gomock.NewController(t))
+		p := mock.NewMockPublisherService(gomock.NewController(t))
+		h := Handler{
+			Service:          o,
+			PublisherService: p,
+		}
+
+		res := httptest.NewRecorder()
+		httpReq := http.Request{}
+		context, _ := gin.CreateTestContext(res)
+		context.Request = &httpReq
+		context.Request.Body = io.NopCloser(bytes.NewBuffer([]byte(`{"amount":23,"appID":2000,"mac":"abc"}`)))
+
+		// call
+		h.CreateOrders(context)
+
+		// assert
+		if res.Code != http.StatusBadRequest {
+			t.Error("error")
+		}
+	})
 	t.Run("CreateOrder with Create Order error", func(t *testing.T) {
 		// mock service
 		o := mock.NewMockOrderService(gomock.NewController(t))
@@ -95,7 +118,7 @@ func TestHandler_CreateOrder(t *testing.T) {
 		httpReq := http.Request{}
 		context, _ := gin.CreateTestContext(res)
 		context.Request = &httpReq
-		context.Request.Body = io.NopCloser(bytes.NewBuffer([]byte(`{"amount":23}`)))
+		context.Request.Body = io.NopCloser(bytes.NewBuffer([]byte(`{"amount":23,"appID":2000,"mac":"d3af0db2f2acd7ec5c9114188f12288e650b669921011124e834418f82da97d0"}`)))
 
 		// call
 		h.CreateOrders(context)
@@ -119,7 +142,7 @@ func TestHandler_CreateOrder(t *testing.T) {
 		httpReq := http.Request{}
 		context, _ := gin.CreateTestContext(res)
 		context.Request = &httpReq
-		context.Request.Body = io.NopCloser(bytes.NewBuffer([]byte(`{"amount":23}`)))
+		context.Request.Body = io.NopCloser(bytes.NewBuffer([]byte(`{"amount":23,"appID":2000,"mac":"d3af0db2f2acd7ec5c9114188f12288e650b669921011124e834418f82da97d0"}`)))
 
 		// call
 		h.CreateOrders(context)

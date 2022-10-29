@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 
@@ -28,7 +27,7 @@ func (h *Handler) CreateOrders(context *gin.Context) {
 	}
 	// validate mac
 	if !authutil.ValidMAC("key", request.Mac, request.AppID) {
-		context.JSON(http.StatusBadRequest, gin.H{"error": errors.New("mac not valid")})
+		context.JSON(http.StatusBadRequest, gin.H{"error": "mac not valid"})
 		context.Abort()
 		return
 	}
@@ -44,7 +43,7 @@ func (h *Handler) CreateOrders(context *gin.Context) {
 	//h.PublisherService.Publish()
 
 	// show success
-	url := fmt.Sprintf("http://localhost:8098/order/%v", request.OrderNo)
+	url := fmt.Sprintf("http://localhost:8098/order?orderNo=%v", request.OrderNo)
 	context.JSON(http.StatusOK, gin.H{"url": url})
 }
 
