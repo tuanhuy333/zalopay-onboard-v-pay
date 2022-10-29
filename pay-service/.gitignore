@@ -1,0 +1,8 @@
+/.idea/
+
+/web/node_modules/
+/web/build/
+/static/
+/web/views/
+/web/static/
+/views/

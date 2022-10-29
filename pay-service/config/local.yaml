@@ -1,0 +1,14 @@
+env: local
+
+database:
+  addr: localhost:3306
+  name: v_pay_orders
+  user: root
+  pass: root
+
+
+kafka:
+  groupID: local_v_pay
+  orders:
+    brokers: [ localhost:9092 ]
+    topic: local.v.pay.orders
