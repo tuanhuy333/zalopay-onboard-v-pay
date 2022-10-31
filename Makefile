@@ -8,4 +8,4 @@ run-pay: 		## Run pay service
 	cd ./pay-service && CONFIG_PATH=config/local.yaml go run main.go
 
 run-admin: 		## Run admin page
-	cd ./admin/dashboard && npm install && npm start
+	cd ./admin/admin-panel && npm install && npm start
